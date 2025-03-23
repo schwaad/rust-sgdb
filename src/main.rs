@@ -10,10 +10,11 @@ use std::collections::BTreeMap;
 
 
 fn main() {
-    clear_terminal();
+    //clear_terminal();
     menu();
     let mut newDataSet = create_empty_data_set();
     let mut newTable = create_empty_table();
+    newDataSet.data_set_name = "meu banco".to_string();
     newTable.table_name = "minha tabela".to_string();
     newTable = add_column(newTable, create_column("Coluna 1".to_string(), Int));
     newTable = add_column(newTable, create_column("Coluna 2".to_string(), Int));
@@ -26,6 +27,8 @@ fn main() {
     newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "3".to_string());
     newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "4".to_string());
 
-    print_table(newTable);
+    print_table(&newTable);
+    newDataSet = add_table_to_data_set(newDataSet, newTable);
+    save_data_set(&newDataSet);
 }
 

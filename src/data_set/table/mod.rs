@@ -43,9 +43,9 @@ pub fn create_empty_table() -> Table{
     }
 }
 
-pub fn print_table(printedTable : Table) {
+pub fn print_table(printedTable : &Table) {
     println!("{}",printedTable.table_name);
-    for (rowIndex,cells) in printedTable.rows{
+    for (rowIndex,cells) in &printedTable.rows{
         for (cellIndex,content) in cells{
             print!("{} ", content);
         }
