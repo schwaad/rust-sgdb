@@ -1,4 +1,7 @@
+use std::collections::BTreeMap;
+
 pub struct Row {
-    pub cells: Vec<String>,
+    pub index: i32,
+    pub cells: BTreeMap<i32,String>,
 }
 
