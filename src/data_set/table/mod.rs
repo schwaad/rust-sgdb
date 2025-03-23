@@ -5,8 +5,8 @@ use column::{Column, ColumnType};
 use row::Row;
 
 pub struct Table {
-    columns : Vec<Column>,
-    rows : Vec<Row>,
+    pub columns : Vec<Column>,
+    pub rows : Vec<Row>,
 }
 
 pub fn create_column(new_column_type: ColumnType) -> Column{
@@ -15,20 +15,33 @@ pub fn create_column(new_column_type: ColumnType) -> Column{
     }
 }
 
-pub fn create_row(new_row_cells: Vec<String>) -> Row{
+pub fn create_row() -> Row{
     Row {
-        cells : new_row_cells
+        cells : Vec::<String>::new(),
     }
-} 
+}
 
-pub fn test() {
-    let table1 = Table {
-        columns: vec![create_column(ColumnType::Str), create_column(ColumnType::Int)],
-        rows: vec![create_row(vec!["oi".to_string(), "tchau".to_string()]), create_row(vec!["1".to_string(),"2".to_string()])],
-    };
-    for i in 0..table1.rows.len() {
-        for j in 0..table1.columns.len() {
-            print!("{} ", table1.rows[i].cells[j]);
+pub fn add_column(mut currentTable : Table, newColumn : Column) -> Table{
+    currentTable.columns.push(newColumn);
+    currentTable
+}
+
+pub fn add_row(mut currentTable : Table, newRow : Row) -> Table{
+    currentTable.rows.push(newRow);
+    currentTable
+}
+
+pub fn create_empty_table() -> Table{
+    Table {
+        columns : Vec::<Column>::new(),
+        rows : Vec::<Row>::new(),
+    }
+}
+
+pub fn print_table(printedTable : Table) {
+    for i in 0..printedTable.rows.len(){
+        for j in 0..printedTable.columns.len(){
+            print!("{} ", printedTable.rows[i].cells[j]);
         }
         println!("");
     }
