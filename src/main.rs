@@ -1,5 +1,6 @@
 pub mod data_set;
 pub mod tui;
+pub mod utils;
 use crate::tui::*;
 use crate::data_set::*;
 use crate::data_set::table::*;
@@ -22,10 +23,10 @@ fn main() {
     newTable = add_row(newTable, create_row(1));
 
     // Garantindo que as linhas existem antes de inserir valores
-    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(0, "1".to_string());
-    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(1, "2".to_string());
-    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "3".to_string());
-    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "4".to_string());
+    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(0, "isso".to_string());
+    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(1, "é".to_string());
+    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "um".to_string());
+    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "teste".to_string());
 
     print_table(&newTable);
     newDataSet = add_table_to_data_set(newDataSet, newTable);
