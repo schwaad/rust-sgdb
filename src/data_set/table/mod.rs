@@ -18,21 +18,21 @@ pub fn create_column( new_column_name : String, new_column_type: ColumnType) -> 
     }
 }
 
-pub fn create_row(rowIndex : i32) -> Row{
+pub fn create_row(row_index : i32) -> Row{
     Row {
-        index : rowIndex,
+        index : row_index,
         cells : BTreeMap::<i32,String>::new(),
     }
 }
 
-pub fn add_column(mut currentTable : Table, newColumn : Column) -> Table{
-    currentTable.columns.insert(newColumn.column_name , newColumn.column_type);
-    currentTable
+pub fn add_column(mut current_table : Table, new_column : Column) -> Table{
+    current_table.columns.insert(new_column.column_name , new_column.column_type);
+    current_table
 }
 
-pub fn add_row(mut currentTable : Table, newRow : Row) -> Table{
-    currentTable.rows.insert(newRow.index, newRow.cells);
-    currentTable
+pub fn add_row(mut current_table : Table, new_row : Row) -> Table{
+    current_table.rows.insert(new_row.index, new_row.cells);
+    current_table
 }
 
 pub fn create_empty_table() -> Table{
@@ -43,10 +43,10 @@ pub fn create_empty_table() -> Table{
     }
 }
 
-pub fn print_table(printedTable : &Table) {
-    println!("{}",printedTable.table_name);
-    for (rowIndex,cells) in &printedTable.rows{
-        for (cellIndex,content) in cells{
+pub fn print_table(printed_table : &Table) {
+    println!("{}",printed_table.table_name);
+    for (_row_index,cells) in &printed_table.rows{
+        for (_cell_index,content) in cells{
             print!("{} ", content);
         }
         println!("");

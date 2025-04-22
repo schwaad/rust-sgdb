@@ -4,32 +4,30 @@ pub mod utils;
 use crate::tui::*;
 use crate::data_set::*;
 use crate::data_set::table::*;
-use crate::data_set::table::column::*;
 use crate::data_set::table::column::ColumnType::Int;
-use crate::data_set::table::row::*;
 use std::collections::BTreeMap;
 
 
 fn main() {
     //clear_terminal();
     menu();
-    let mut newDataSet = create_empty_data_set();
-    let mut newTable = create_empty_table();
-    newDataSet.data_set_name = "meu banco".to_string();
-    newTable.table_name = "minha tabela".to_string();
-    newTable = add_column(newTable, create_column("Coluna 1".to_string(), Int));
-    newTable = add_column(newTable, create_column("Coluna 2".to_string(), Int));
-    newTable = add_row(newTable, create_row(0));
-    newTable = add_row(newTable, create_row(1));
+    let mut new_data_set = create_empty_data_set();
+    let mut new_table = create_empty_table();
+    new_data_set.data_set_name = "meu banco".to_string();
+    new_table.table_name = "minha tabela".to_string();
+    new_table = add_column(new_table, create_column("Coluna 1".to_string(), Int));
+    new_table = add_column(new_table, create_column("Coluna 2".to_string(), Int));
+    new_table = add_row(new_table, create_row(0));
+    new_table = add_row(new_table, create_row(1));
 
     // Garantindo que as linhas existem antes de inserir valores
-    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(0, "isso".to_string());
-    newTable.rows.entry(0).or_insert_with(BTreeMap::new).insert(1, "é".to_string());
-    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "um".to_string());
-    newTable.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "teste".to_string());
+    new_table.rows.entry(0).or_insert_with(BTreeMap::new).insert(0, "isso".to_string());
+    new_table.rows.entry(0).or_insert_with(BTreeMap::new).insert(1, "é".to_string());
+    new_table.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "um".to_string());
+    new_table.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "teste".to_string());
 
-    print_table(&newTable);
-    newDataSet = add_table_to_data_set(newDataSet, newTable);
-    save_data_set(&newDataSet);
+    print_table(&new_table);
+    new_data_set = add_table_to_data_set(new_data_set, new_table);
+    let _ = save_data_set(&new_data_set);
 }
 
