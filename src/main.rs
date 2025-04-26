@@ -6,28 +6,42 @@ use crate::data_set::*;
 use crate::data_set::table::*;
 use crate::data_set::table::column::ColumnType::Int;
 use std::collections::BTreeMap;
+use std::env;
+use clap::Parser;
 
+#[derive(Parser)]
+#[command(name = "rust-sgbd")]
+#[command(about = "Um SGBD simplificado implementado em Rust", long_about = None)]
+struct Cli {
+    #[arg(short, long)]
+    verbose: bool,
+    #[arg(short,long)]
+    create: Option<String>,
+    #[arg(short,long)]
+    read: Option<String>,
+    #[arg(short,long)]
+    update: Option<String>,
+    #[arg(short,long)]
+    delete: Option<String>
+}
 
 fn main() {
-    //clear_terminal();
-    menu();
-    let mut new_data_set = create_empty_data_set();
-    let mut new_table = create_empty_table();
-    new_data_set.data_set_name = "meu banco".to_string();
-    new_table.table_name = "minha tabela".to_string();
-    new_table = add_column(new_table, create_column("Coluna 1".to_string(), Int));
-    new_table = add_column(new_table, create_column("Coluna 2".to_string(), Int));
-    new_table = add_row(new_table, create_row(0));
-    new_table = add_row(new_table, create_row(1));
+    let args = Cli::parse();
+    if args.verbose{
+        println!("Verbose mode on");
+    }
+    if args.create.is_some(){
+        println!("Create");
+    }
+    if args.read.is_some(){
+        println!("Read");
+    }
+    if args.update.is_some(){
+        println!("Update");
+    }
+    if args.delete.is_some(){
+        println!("Delete");
+    }
+}   
 
-    // Garantindo que as linhas existem antes de inserir valores
-    new_table.rows.entry(0).or_insert_with(BTreeMap::new).insert(0, "isso".to_string());
-    new_table.rows.entry(0).or_insert_with(BTreeMap::new).insert(1, "é".to_string());
-    new_table.rows.entry(1).or_insert_with(BTreeMap::new).insert(0, "um".to_string());
-    new_table.rows.entry(1).or_insert_with(BTreeMap::new).insert(1, "teste".to_string());
-
-    print_table(&new_table);
-    new_data_set = add_table_to_data_set(new_data_set, new_table);
-    let _ = save_data_set(&new_data_set);
-}
 

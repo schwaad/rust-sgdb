@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 pub fn get_data_sets_dir_path() -> PathBuf {
-    let manifest_dir = env!("CARGO_MANIFEST_DIR");
+    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
     let mut path = PathBuf::from(manifest_dir);
     path.push("data_sets");
     path
