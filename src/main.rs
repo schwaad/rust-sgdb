@@ -1,38 +1,9 @@
 pub mod data_set;
 pub mod tui;
-mod utils;
-use clap::{Parser, Subcommand, Args};
-
-#[derive(Parser)]
-#[command(name = "rust-sgbd")]
-#[command(about = "Um SGBD em Rust", long_about = None)]
-struct Cli {
-    #[command(subcommand)]
-    command: CommandType,
-}
-
-#[derive(Subcommand)]
-enum CommandType {
-    Create(Resource),
-    Read(Resource),
-    Update(Resource),
-    Delete(Resource),
-}
-
-#[derive(Args, Debug)]
-struct Resource {
-    #[arg(value_enum)]
-    resource: ResourceType,
-}
-
-#[derive(clap::ValueEnum, Clone, Debug)]
-enum ResourceType {
-    Dataset,
-    Table,
-    Column,
-    Row,
-}
-
+pub mod utils;
+pub mod cli;
+use crate::cli::{Cli, CommandType, ResourceType};
+use clap::Parser;
 fn main() {
     let cli = Cli::parse();
 
