@@ -1,47 +1,46 @@
 pub mod data_set;
 pub mod tui;
-pub mod utils;
-use crate::tui::*;
-use crate::data_set::*;
-use crate::data_set::table::*;
-use crate::data_set::table::column::ColumnType::Int;
-use std::collections::BTreeMap;
-use std::env;
-use clap::Parser;
+mod utils;
+use clap::{Parser, Subcommand, Args};
 
 #[derive(Parser)]
 #[command(name = "rust-sgbd")]
-#[command(about = "Um SGBD simplificado implementado em Rust", long_about = None)]
+#[command(about = "Um SGBD em Rust", long_about = None)]
 struct Cli {
-    #[arg(short, long)]
-    verbose: bool,
-    #[arg(short,long)]
-    create: Option<String>,
-    #[arg(short,long)]
-    read: Option<String>,
-    #[arg(short,long)]
-    update: Option<String>,
-    #[arg(short,long)]
-    delete: Option<String>
+    #[command(subcommand)]
+    command: CommandType,
+}
+
+#[derive(Subcommand)]
+enum CommandType {
+    Create(Resource),
+    Read(Resource),
+    Update(Resource),
+    Delete(Resource),
+}
+
+#[derive(Args, Debug)]
+struct Resource {
+    #[arg(value_enum)]
+    resource: ResourceType,
+}
+
+#[derive(clap::ValueEnum, Clone, Debug)]
+enum ResourceType {
+    Dataset,
+    Table,
+    Column,
+    Row,
 }
 
 fn main() {
-    let args = Cli::parse();
-    if args.verbose{
-        println!("Verbose mode on");
-    }
-    if args.create.is_some(){
-        println!("Create");
-    }
-    if args.read.is_some(){
-        println!("Read");
-    }
-    if args.update.is_some(){
-        println!("Update");
-    }
-    if args.delete.is_some(){
-        println!("Delete");
-    }
-}   
+    let cli = Cli::parse();
 
+    match cli.command {
+        CommandType::Create(r) => println!("Criando {:?}", r.resource),
+        CommandType::Read(r) => println!("Lendo {:?}", r.resource),
+        CommandType::Update(r) => println!("Atualizando {:?}", r.resource),
+        CommandType::Delete(r) => println!("Deletando {:?}", r.resource),
+    }
+}
 
